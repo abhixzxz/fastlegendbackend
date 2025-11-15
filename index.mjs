@@ -8,6 +8,11 @@ dotenv.config();
 const app = express();
 app.disable("x-powered-by");
 
+//hello world
+app.get("/", (req, res) => {
+  res.json({ success: true, message: "SERVER IS RUNNING SUCCESSFULLY 🌍" });
+});
+
 const corsOptions = {
   origin: process.env.CLIENT_ORIGIN || "http://localhost:3000",
   credentials: true,
@@ -179,10 +184,7 @@ app.put("/api/users/stats", async (req, res) => {
       updateData.bestTime = Math.min(user.bestTime || 60, time);
     }
 
-    await users.updateOne(
-      { _id: new ObjectId(uid) },
-      { $set: updateData }
-    );
+    await users.updateOne({ _id: new ObjectId(uid) }, { $set: updateData });
 
     return res.json({ success: true });
   } catch (e) {
